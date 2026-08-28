@@ -50,12 +50,12 @@ export const Calculator: React.FC = () => {
     }
   }, [history]);
 
-  // Flash active key state for keyboard feedback
+  // Flash active key state for feedback (lighting effect)
   const triggerKeyFlash = (keyId: string) => {
     setActiveKey(keyId);
     setTimeout(() => {
-      setActiveKey(null);
-    }, 150);
+      setActiveKey((prev) => (prev === keyId ? null : prev));
+    }, 220);
   };
 
   // Handle digit input
@@ -266,6 +266,25 @@ export const Calculator: React.FC = () => {
     return 'text-4xl sm:text-5xl';
   };
 
+  // Helper for glowing blue number buttons on click/press with smooth fade out
+  const getNumberBtnClass = (digit: string) => {
+    const isActive = activeKey === `btn-${digit}`;
+    return `h-14 rounded-2xl font-medium text-xl flex items-center justify-center transition-all duration-300 ease-out select-none ${
+      isActive
+        ? 'bg-blue-600 text-white ring-2 ring-blue-400 shadow-[0_0_24px_rgba(59,130,246,0.85)] scale-[0.96]'
+        : 'bg-[#252528] text-stone-100 hover:bg-[#303035] active:bg-blue-600 active:text-white active:ring-2 active:ring-blue-400 active:shadow-[0_0_24px_rgba(59,130,246,0.85)] active:scale-[0.96]'
+    }`;
+  };
+
+  const getDotBtnClass = () => {
+    const isActive = activeKey === 'btn-dot';
+    return `h-14 rounded-2xl font-medium text-2xl flex items-center justify-center transition-all duration-300 ease-out select-none ${
+      isActive
+        ? 'bg-blue-600 text-white ring-2 ring-blue-400 shadow-[0_0_24px_rgba(59,130,246,0.85)] scale-[0.96]'
+        : 'bg-[#252528] text-stone-100 hover:bg-[#303035] active:bg-blue-600 active:text-white active:ring-2 active:ring-blue-400 active:shadow-[0_0_24px_rgba(59,130,246,0.85)] active:scale-[0.96]'
+    }`;
+  };
+
   return (
     <div id="calculator-wrapper" className="w-full max-w-sm mx-auto select-none">
       {/* Calculator Shell */}
@@ -429,9 +448,7 @@ export const Calculator: React.FC = () => {
           <button
             id="btn-7"
             onClick={() => inputDigit('7')}
-            className={`h-14 rounded-2xl font-medium text-xl transition-all duration-100 flex items-center justify-center bg-stone-850 hover:bg-stone-750 text-stone-100 active:scale-95 bg-[#252528] hover:bg-[#303035] ${
-              activeKey === 'btn-7' ? 'ring-2 ring-stone-400/50 bg-[#303035]' : ''
-            }`}
+            className={getNumberBtnClass('7')}
           >
             7
           </button>
@@ -439,9 +456,7 @@ export const Calculator: React.FC = () => {
           <button
             id="btn-8"
             onClick={() => inputDigit('8')}
-            className={`h-14 rounded-2xl font-medium text-xl transition-all duration-100 flex items-center justify-center bg-[#252528] hover:bg-[#303035] text-stone-100 active:scale-95 ${
-              activeKey === 'btn-8' ? 'ring-2 ring-stone-400/50 bg-[#303035]' : ''
-            }`}
+            className={getNumberBtnClass('8')}
           >
             8
           </button>
@@ -449,9 +464,7 @@ export const Calculator: React.FC = () => {
           <button
             id="btn-9"
             onClick={() => inputDigit('9')}
-            className={`h-14 rounded-2xl font-medium text-xl transition-all duration-100 flex items-center justify-center bg-[#252528] hover:bg-[#303035] text-stone-100 active:scale-95 ${
-              activeKey === 'btn-9' ? 'ring-2 ring-stone-400/50 bg-[#303035]' : ''
-            }`}
+            className={getNumberBtnClass('9')}
           >
             9
           </button>
@@ -470,9 +483,7 @@ export const Calculator: React.FC = () => {
           <button
             id="btn-4"
             onClick={() => inputDigit('4')}
-            className={`h-14 rounded-2xl font-medium text-xl transition-all duration-100 flex items-center justify-center bg-[#252528] hover:bg-[#303035] text-stone-100 active:scale-95 ${
-              activeKey === 'btn-4' ? 'ring-2 ring-stone-400/50 bg-[#303035]' : ''
-            }`}
+            className={getNumberBtnClass('4')}
           >
             4
           </button>
@@ -480,9 +491,7 @@ export const Calculator: React.FC = () => {
           <button
             id="btn-5"
             onClick={() => inputDigit('5')}
-            className={`h-14 rounded-2xl font-medium text-xl transition-all duration-100 flex items-center justify-center bg-[#252528] hover:bg-[#303035] text-stone-100 active:scale-95 ${
-              activeKey === 'btn-5' ? 'ring-2 ring-stone-400/50 bg-[#303035]' : ''
-            }`}
+            className={getNumberBtnClass('5')}
           >
             5
           </button>
@@ -490,9 +499,7 @@ export const Calculator: React.FC = () => {
           <button
             id="btn-6"
             onClick={() => inputDigit('6')}
-            className={`h-14 rounded-2xl font-medium text-xl transition-all duration-100 flex items-center justify-center bg-[#252528] hover:bg-[#303035] text-stone-100 active:scale-95 ${
-              activeKey === 'btn-6' ? 'ring-2 ring-stone-400/50 bg-[#303035]' : ''
-            }`}
+            className={getNumberBtnClass('6')}
           >
             6
           </button>
@@ -511,9 +518,7 @@ export const Calculator: React.FC = () => {
           <button
             id="btn-1"
             onClick={() => inputDigit('1')}
-            className={`h-14 rounded-2xl font-medium text-xl transition-all duration-100 flex items-center justify-center bg-[#252528] hover:bg-[#303035] text-stone-100 active:scale-95 ${
-              activeKey === 'btn-1' ? 'ring-2 ring-stone-400/50 bg-[#303035]' : ''
-            }`}
+            className={getNumberBtnClass('1')}
           >
             1
           </button>
@@ -521,9 +526,7 @@ export const Calculator: React.FC = () => {
           <button
             id="btn-2"
             onClick={() => inputDigit('2')}
-            className={`h-14 rounded-2xl font-medium text-xl transition-all duration-100 flex items-center justify-center bg-[#252528] hover:bg-[#303035] text-stone-100 active:scale-95 ${
-              activeKey === 'btn-2' ? 'ring-2 ring-stone-400/50 bg-[#303035]' : ''
-            }`}
+            className={getNumberBtnClass('2')}
           >
             2
           </button>
@@ -531,9 +534,7 @@ export const Calculator: React.FC = () => {
           <button
             id="btn-3"
             onClick={() => inputDigit('3')}
-            className={`h-14 rounded-2xl font-medium text-xl transition-all duration-100 flex items-center justify-center bg-[#252528] hover:bg-[#303035] text-stone-100 active:scale-95 ${
-              activeKey === 'btn-3' ? 'ring-2 ring-stone-400/50 bg-[#303035]' : ''
-            }`}
+            className={getNumberBtnClass('3')}
           >
             3
           </button>
@@ -552,9 +553,7 @@ export const Calculator: React.FC = () => {
           <button
             id="btn-0"
             onClick={() => inputDigit('0')}
-            className={`h-14 rounded-2xl font-medium text-xl transition-all duration-100 flex items-center justify-center bg-[#252528] hover:bg-[#303035] text-stone-100 active:scale-95 ${
-              activeKey === 'btn-0' ? 'ring-2 ring-stone-400/50 bg-[#303035]' : ''
-            }`}
+            className={getNumberBtnClass('0')}
           >
             0
           </button>
@@ -562,9 +561,7 @@ export const Calculator: React.FC = () => {
           <button
             id="btn-dot"
             onClick={inputDecimal}
-            className={`h-14 rounded-2xl font-medium text-2xl transition-all duration-100 flex items-center justify-center bg-[#252528] hover:bg-[#303035] text-stone-100 active:scale-95 ${
-              activeKey === 'btn-dot' ? 'ring-2 ring-stone-400/50 bg-[#303035]' : ''
-            }`}
+            className={getDotBtnClass()}
           >
             .
           </button>
